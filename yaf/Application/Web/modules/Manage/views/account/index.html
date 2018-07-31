@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台</title>
+    <meta name="keywords" content="管理后台">
+    <meta name="description" content="管理后台">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css" rel="stylesheet">
+    <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+
+</head>
+
+<body class="gray-bg">
+
+<div class="middle-box text-center  animated fadeInDown">
+    <div>
+        <div>
+
+            <h1 class="logo-name">玄</h1>
+
+        </div>
+        <h3>管理平台</h3>
+
+        <form class="m-t" id="login" role="form" action="/manage/account/login">
+            <div class="form-group">
+                <input type="text" name="user_name" class="form-control" placeholder="用户名" required="">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" placeholder="密码" required="">
+            </div>
+            <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
+
+            </p>
+
+        </form>
+    </div>
+</div>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script type="application/javascript">
+    $(document).ready(function() {
+        $('#login').on("submit",function (ev) {
+            $(".help-block").remove();
+            var params = {
+                "user_name":$(":input[name='user_name']").val(),
+                "password":$(":input[name='password']").val(),
+            };
+
+            $.ajax({
+                url:"/manage/account/login",
+                type:"POST",
+                data:params,
+                success:function (data) {
+                    if(data.code == 0){
+                        location.href = '/manage/index/index';
+                    }else if(data.code == 100000004){
+                        $.each(data.data,function (k,v) {
+                            var html = '<span class="text-left help-block m-b-none"><i class="fa fa-info-circle"></i> '+v+'</span>'
+                            $(":input[name='"+k+"']").after(html)
+                        })
+                    }else{
+                        swal({
+                            title:data.msg,
+                            type:"error",
+                            confirmButtonText: "确认"
+                        })
+                    }
+                },
+                error:function () {
+                    swal({
+                        title:"服务器错误",
+                        type:"error",
+                        timer:2000,
+                        closeOnConfirm:true,
+                        allowOutsideClick:true,
+                        confirmButtonText:'确认'
+                    })
+                }
+            });
+
+            ev.preventDefault();
+            return false;
+        });
+
+
+    });
+</script>
+</body>
+</html>

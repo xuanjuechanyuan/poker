@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css" rel="stylesheet">
+    <link href="/static/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css" rel="stylesheet">
+    <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <div class="col-sm-10">
+                        <h5>扑克列表</h5>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>标题</th>
+                            <th>图片</th>
+                            <th>牌号</th>
+                            <th>花色</th>
+                            <th>状态</th>
+                            <th>修改时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        foreach($data as $val){
+
+                    ?>
+                        <tr class="gradeX">
+                            <td><?=$val['id']?></td>
+                            <td><?=$val['title']?></td>
+                            <td><?=$val['pic']?></td>
+                            <td><?=$pokerList[$val['num']]?></td>
+                            <td style="text-align:center;">
+                                <?=$pokerTypeStr[$val['poker_type']]?>
+                            </td>
+                            <td class="center">
+                                <?php
+                                echo $val['state'] == 1 ? '正常':'未启用';
+                            ?>
+                            </td>
+                            <td class="center"><?=$val['update_time']?></td>
+                            <td class="center">
+                                <a class="btn btn-white btn-sm" href="/manage/poker/editPoker?id=<?=$val['id']?>">编辑</a>
+                                <?php
+                                /*<a class="btn btn-white btn-sm js_clear" data-id="<?=$val['id']?>" href="javascript:;">
+                                    清除
+                                </a>*/
+                                ?>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/content.min.js"></script>
+<script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script type="application/javascript">
+    $(function () {
+        // 停用用户
+        $('.js_clear').on('click',function (e) {
+            var params = {
+                "id":$(this).attr('data-id'),
+            };
+
+            $.ajax({
+                url:"/manage/poker/resetpoker",
+                type:"POST",
+                data:params,
+                success:function (data) {
+                    if(data.code == 0){
+                        swal({
+                                title:"已经清除",
+                                type:"success",
+                                confirmButtonText: "确认"
+                            },
+                            function(){
+                                location.reload();
+                            })
+                    }else{
+                        swal({
+                            title:data.msg,
+                            type:"error",
+                            confirmButtonText: "确认"
+                        })
+                    }
+                },
+                error:function () {
+                    swal({
+                        title:"服务器错误",
+                        type:"error",
+                        timer:2000,
+                        closeOnConfirm:true,
+                        allowOutsideClick:true,
+                        confirmButtonText:'确认'
+                    })
+                }
+            });
+        })
+    })
+</script>
+</body>
+</html>

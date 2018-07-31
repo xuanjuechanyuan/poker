@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>玄绝禅院</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css" rel="stylesheet">
+    <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <style type="text/css">
+
+        .poker {
+            width: 315px;
+            height: 440px;
+            border: 2px solid #e7eaec;
+            border-radius: 15px;
+            background-color: white;
+            margin: 10px 0px 25px 30px;
+            float: left;
+        }
+
+        .poker div {
+            position: absolute;
+            width: 315px;
+            height: 440px;
+            z-index: 10;
+            cursor:pointer;
+        }
+        .poker div p{
+            margin: 0;
+        }
+
+        .rotate {
+            transform: rotate(180deg);
+            -ms-transform: rotate(180deg); /* IE 9 */
+            -moz-transform: rotate(180deg); /* Firefox */
+            -webkit-transform: rotate(180deg); /* Safari 和 Chrome */
+            -o-transform: rotate(180deg); /* Opera */
+        }
+        .des {
+            display: none;
+        }
+        .brandName {
+            position: absolute;
+            top: 15px;
+            left: 10px;
+            font-size: 30px;
+            width: 34px;
+            margin: 0 auto;
+            line-height: 30px;
+            word-wrap: break-word;
+        }
+
+        .brandNameBottom {
+            position: absolute;
+            bottom: 15px;
+            right: 10px;
+            font-size: 30px;
+            width: 34px;
+            margin: 0 auto;
+            line-height: 30px;
+            word-wrap: break-word;
+        }
+
+        .flowerColor {
+            position: absolute;
+            top: 40px;
+            left: 10px;
+            font-size: 30px;
+        }
+
+        .flowerColorBottom {
+            position: absolute;
+            bottom: 40px;
+            right: 10px;
+            font-size: 30px;
+        }
+
+        .pokerImg {
+            position: absolute;
+            left: 50px;
+            top: 30px;
+            width: 215px;
+            height: 380px;
+            line-height: 380px;
+        }
+
+        .pokerImg img {
+            width: 215px;
+        }
+
+        .pokerImgBottom {
+            position: absolute;
+            right: 50px;
+            bottom: 30px;
+        }
+
+        .pokerImgBottom img {
+            width: 215px;
+            height: 190px;
+        }
+
+        .pokerName {
+            position: absolute;
+            left: 45px;
+            top: 50px;
+            z-index: 1;
+            color: black;
+            font-size: 20px;
+            margin: 0 auto;
+            line-height: 24px;
+            word-wrap: break-word;
+            width: 215px;
+            text-align:center;
+        }
+
+        .pokerNameBottom {
+            position: absolute;
+            z-index: 1;
+            color: black;
+            right: 45px;
+            bottom: 50px;
+            font-size: 20px;
+            margin: 0 auto;
+            line-height: 24px;
+            word-wrap: break-word;
+            width: 215px;
+            text-align:center;
+        }
+        .sweet-alert p {
+            text-align: left;
+            max-height: 150px;
+            overflow: auto;
+        }
+        .sweet-alert .sa-icon.sa-custom {
+            border:2px solid;
+            border-radius:75px;
+            -moz-border-radius:75px; /* Old Firefox */
+        }
+
+    </style>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <?php
+            foreach($data as $v){
+                if($v['state'] == 1 || true){
+                ?>
+        <div class="poker" >
+            <div class="ccc">
+                <p class="brandName" style="<?=$v['poker_type'] == 5 ?'color:red':'';?>" ><?=$pokerList[$v['num']]?></p>
+                <p class="flowerColor">
+                    <?=$pokerTypeStr[$v['poker_type']]?>
+                </p>
+                <p class="pokerName" style="display: none;">
+                    <?=$v['title']?>
+                </p>
+                <p class="des"><?=$v['des']?></p>
+                <p class="pokerImg">
+                    <img onerror="this.src='/upload/default.png'" src="<?=$v['pic']?>">
+                </p>
+                <p class="rotate pokerImgBottom" style="display: none;">
+                    <img onerror="this.src='/upload/default.png'" src="<?=$v['pic']?>">
+                </p>
+                <p class="pokerNameBottom">
+                    <?=$v['title']?>
+                </p>
+                <p class="flowerColorBottom rotate">
+                    <?=$pokerTypeStr[$v['poker_type']]?>
+                </p>
+                <p class="rotate brandNameBottom" style="<?=$v['poker_type'] == 5 ?'color:red':'';?>"><?=$pokerList[$v['num']]?></p>
+
+            </div>
+        </div>
+                <?php
+                }
+
+            }
+        ?>
+
+    </div>
+</div>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script type="application/javascript">
+    $('.ccc').on('click',function (e) {
+        var $this = $(this);
+        var title = '111';
+        console.log($this.find('.pokerImgBottom img').attr('src'))
+        swal({
+            title: $this.find('.pokerName').text(),
+            text: $this.find('.des').text(),
+            imageUrl: $this.find('.pokerImgBottom img').attr('src'),
+            imageSize: '150x150',
+            animation: false
+        })
+    });
+</script>
+</body>
+</html>

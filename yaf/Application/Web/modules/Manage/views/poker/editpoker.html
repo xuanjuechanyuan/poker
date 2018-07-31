@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>添加用户</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="/static/css/bootstrap.min14ed.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css" rel="stylesheet">
+    <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="/static/css/plugins/webuploader/webuploader.css" rel="stylesheet">
+    <style type="text/css">
+
+        .poker {
+            width: 315px;
+            height: 440px;
+            border: 2px solid #e7eaec;
+            border-radius: 15px;
+        }
+
+        .poker div {
+            position: absolute;
+            width: 315px;
+            height: 440px;
+        }
+        .poker div p{
+            margin: 0;
+        }
+
+        .rotate {
+            transform: rotate(180deg);
+            -ms-transform: rotate(180deg); /* IE 9 */
+            -moz-transform: rotate(180deg); /* Firefox */
+            -webkit-transform: rotate(180deg); /* Safari 和 Chrome */
+            -o-transform: rotate(180deg); /* Opera */
+        }
+
+        .brandName {
+            position: absolute;
+            top: 15px;
+            left: 10px;
+            font-size: 30px;
+            width: 34px;
+            margin: 0 auto;
+            line-height: 30px;
+            word-wrap: break-word;
+        }
+
+        .brandNameBottom {
+            position: absolute;
+            bottom: 15px;
+            right: 10px;
+            font-size: 30px;
+            width: 34px;
+            margin: 0 auto;
+            line-height: 30px;
+            word-wrap: break-word;
+        }
+
+        .flowerColor {
+            position: absolute;
+            top: 40px;
+            left: 15px;
+            font-size: 40px;
+        }
+
+        .flowerColorBottom {
+            position: absolute;
+            bottom: 40px;
+            right: 15px;
+            font-size: 40px;
+        }
+
+        .pokerImg {
+            position: absolute;
+            left: 50px;
+            top: 30px;
+            width: 215px;
+            height: 380px;
+            line-height: 380px;
+        }
+
+        .pokerImg img {
+            width: 215px;
+        }
+
+        .pokerImgBottom {
+            position: absolute;
+            right: 50px;
+            bottom: 30px;
+        }
+
+        .pokerImgBottom img {
+            width: 215px;
+            height: 190px;
+        }
+
+        .pokerName {
+            position: absolute;
+            left: 45px;
+            top: 50px;
+            z-index: 1;
+            color: black;
+            font-size: 20px;
+            width: 15px;
+            margin: 0 auto;
+            line-height: 24px;
+            word-wrap: break-word;
+        }
+
+        .pokerNameBottom {
+            position: absolute;
+            z-index: 1;
+            color: black;
+            right: 45px;
+            bottom: 50px;
+            font-size: 20px;
+            width: 15px;
+            margin: 0 auto;
+            line-height: 24px;
+            word-wrap: break-word;
+        }
+    </style>
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑（
+                        <small><a href="/manage/poker/getlist">返回列表页</a></small>
+                        ）
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <form id="poker_edit" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">标题</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" name="title" value="<?=$data['title']?>" required="" class="form-control js_pokerName">
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">描述</label>
+
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="des" style="height: 200px;"><?=$data['des']?></textarea>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">poker</label>
+                            <input type="hidden" name="pic" value="<?=$data['pic']?>">
+                            <div class="col-sm-10"  style="width: 350px;">
+                                <div class="poker" >
+                                    <div>
+                                        <p class="brandName" style="<?=$data['poker_type'] == 5 ?'color:red':'';?>"><?=$pokerList[$data['num']]?></p>
+                                        <p class="flowerColor">
+                                            <?=$pokerTypeStr[$data['poker_type']]?>
+                                        </p>
+                                        <p class="pokerName">
+                                            <?=($data['title'] ?$data['title']: "玄绝禅院")?>
+                                        </p>
+                                        <p class="pokerImg">
+                                            <img onerror="this.src='/upload/default.png'" src="<?=$data['pic']?>">
+                                        </p>
+                                        <p class="rotate pokerImgBottom" style="display: none;">
+                                            <img onerror="this.src='/upload/default.png'" src="<?=$data['pic']?>">
+                                        </p>
+                                        <p class="pokerNameBottom rotate" style="display: none;">
+                                            <?=($data['title'] ?$data['title']: "玄绝禅院")?>
+                                        </p>
+                                        <p class="flowerColorBottom rotate">
+                                            <?=$pokerTypeStr[$data['poker_type']]?>
+                                        </p>
+                                        <p class="rotate brandNameBottom" style="<?=$data['poker_type'] == 5 ?'color:red':'';?>"><?=$pokerList[$data['num']]?></p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6"  style="width: 350px;">
+                                <div id="fileUploader">
+                                    <!--dom结构部分-->
+                                    <div id="uploader-demo">
+                                        <!--用来存放item-->
+                                        <div id="fileList" class="uploader-list"></div>
+                                        <div id="filePicker">选择图片</div>
+                                    </div>
+                                    <h3>上传图片尺寸为（645*1140）</h3>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-primary" type="submit">保存内容</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/content.min.js"></script>
+<script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/plugins/webuploader/webuploader.html5only.js"></script>
+
+<script>
+    var id = <?=$data['id']?>;
+    $(document).ready(function () {
+        // 重置名称
+        $('.js_pokerName').on('blur',function (e) {
+            var pokerName = $(this).val();
+            if(pokerName.length > 0){
+                $('.pokerName').text(pokerName);
+                $('.pokerNameBottom').text(pokerName)
+            }
+
+        });
+        // 实例化
+        var uploader = WebUploader.create({
+            auto:true,
+            pick: '#filePicker',
+            paste: '#fileUploader',
+            chunked: false,
+            server: '/manage/upload/image',
+
+             accept: {
+                 title: 'Images',
+                 extensions: 'jpg,jpeg,png',
+                 mimeTypes: 'image/*'
+             },
+
+            // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
+            disableGlobalDnd: true,
+            fileNumLimit: 1,
+            fileSizeLimit: 20 * 1024 * 1024,    // 2 M
+            fileSingleSizeLimit: 20 * 1024 * 1024    // 50 M
+        });
+        // 图片配置.
+        uploader.option( 'compress', {
+            width: 645,
+            height: 570,
+            quality:90,
+            allowMagnify:false,
+            crop:true,
+            preserveHeaders:false
+        });
+
+        // 显示上传
+        uploader.onFileQueued = function( file ) {
+            uploader.makeThumb( file, function( error, src ) {
+                if(!error){
+                    $('.pokerImg').find('img').attr('src',src);
+                    $('.pokerImgBottom').find('img').attr('src',src);
+                }
+
+            } );
+        };
+        // 新添加图片时重置上传队列
+        $('#filePicker').on('click',function () {
+            uploader.reset();
+        });
+
+        // 上传成功
+        uploader.on('uploadSuccess',function (file,response) {
+            if(response.code == 0){
+                $('.pokerImg').find('img').attr('src',response.data.url);
+                $('.pokerImgBottom').find('img').attr('src',response.data.url);
+                $(":input[name='pic']").val(response.data.url)
+                swal({
+                    title: '图片上传成功',
+                    type: "success",
+                    confirmButtonText: "确认"
+                })
+            }else{
+                swal({
+                    title: '图片上传失败',
+                    type: "error",
+                    confirmButtonText: "确认"
+                })
+            }
+        });
+
+        $('#poker_edit').on("submit", function (ev) {
+            $(".help-block").remove();
+            var params = {
+                "id": id,
+                "title": $(":input[name='title']").val(),
+                "des": $(":input[name='des']").val(),
+                "pic": $(":input[name='pic']").val(),
+            };
+            if(params.pic.length == 0){
+                swal({
+                    title: '必须上传图片',
+                    type: "error",
+                    confirmButtonText: "确认"
+                })
+                ev.preventDefault();
+                return false;
+            }
+            $.ajax({
+                url: "/manage/poker/ajaxEdit",
+                type: "POST",
+                data: params,
+                success: function (data) {
+                    if (data.code == 0) {
+                        swal({
+                                title: "编辑成功",
+                                type: "success",
+                                confirmButtonText: "确认"
+                            },
+                            function () {
+                                location.href='/manage/poker/getlist';
+                            })
+                    } else if (data.code == 100000004) {
+                        $.each(data.data, function (k, v) {
+                            var html = '<span class="text-left help-block m-b-none"><i class="fa fa-info-circle"></i> ' + v + '</span>'
+                            $(":input[name='" + k + "']").after(html)
+                        })
+                    } else {
+                        swal({
+                            title: data.msg,
+                            type: "error",
+                            confirmButtonText: "确认"
+                        })
+                    }
+                },
+                error: function () {
+                    swal({
+                        title: "服务器错误",
+                        type: "error",
+                        timer: 2000,
+                        closeOnConfirm: true,
+                        allowOutsideClick: true,
+                        confirmButtonText: '确认'
+                    })
+                }
+            });
+
+            ev.preventDefault();
+            return false;
+        });
+    });
+</script>
+</body>
+
+
+</html>

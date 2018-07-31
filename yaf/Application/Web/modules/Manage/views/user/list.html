@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css" rel="stylesheet">
+    <link href="/static/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css" rel="stylesheet">
+    <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <div class="col-sm-10">
+                        <h5>用户列表</h5>
+                    </div>
+                    <div class="col-sm-2">
+                        <a class="btn btn-primary" href="/manage/user/adduser" ><i class="fa fa-user-plus"></i>&nbsp;新建</a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>用户名</th>
+                            <th>用户姓名</th>
+                            <th>状态</th>
+                            <th>身份</th>
+                            <th>创建时间</th>
+                            <th>修改时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                    <?php
+                        foreach($data as $val){
+
+                    ?>
+                    <tr class="gradeX">
+                        <td><?=$val['id']?></td>
+                        <td><?=$val['user_name']?></td>
+                        <td><?=$val['user_real']?></td>
+                        <td class="center">
+                            <?php
+                                echo $val['state'] == 1 ? '正常':'停用';
+                            ?>
+                        </td>
+                        <td class="center">
+                            <?php
+                                echo $val['level'] == 1 ? '系统管理员':'管理员';
+                            ?>
+                        </td>
+                        <td class="center"><?=$val['create_time']?></td>
+                        <td class="center"><?=$val['update_time']?></td>
+                        <td class="center">
+                            <a class="btn btn-white btn-sm js_resetPassword" data-id="<?=$val['id']?>" href="javascript:;">密码重置</a>
+                            <a class="btn btn-white btn-sm js_stop" data-id="<?=$val['id']?>" href="javascript:;">
+                                <?php
+                                echo $val['state'] == 1 ? '停用':'启用';
+                            ?>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
+
+                    </table>
+                    <div class='row'>
+                        <?=$page?>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/content.min.js"></script>
+<script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script type="application/javascript">
+    $(function () {
+        // 重置密码
+        $('.js_resetPassword').on('click',function (e) {
+            var params = {
+                "id":$(this).attr('data-id'),
+            };
+
+            $.ajax({
+                url:"/manage/user/resetpassword",
+                type:"POST",
+                data:params,
+                success:function (data) {
+                    if(data.code == 0){
+                        swal({
+                                title:"用户添加成功",
+                                type:"success",
+                                text:"新密码为："+data.data.password,
+                                confirmButtonText: "确认"
+                            },
+                            function(){
+                                location.reload();
+                            })
+                    }else{
+                        swal({
+                            title:data.msg,
+                            type:"error",
+                            confirmButtonText: "确认"
+                        })
+                    }
+                },
+                error:function () {
+                    swal({
+                        title:"服务器错误",
+                        type:"error",
+                        timer:2000,
+                        closeOnConfirm:true,
+                        allowOutsideClick:true,
+                        confirmButtonText:'确认'
+                    })
+                }
+            });
+        })
+        // 停用用户
+        $('.js_stop').on('click',function (e) {
+            var params = {
+                "id":$(this).attr('data-id'),
+            };
+
+            $.ajax({
+                url:"/manage/user/state",
+                type:"POST",
+                data:params,
+                success:function (data) {
+                    if(data.code == 0){
+                        swal({
+                                title:"用户状态修改成功",
+                                type:"success",
+                                text:"新状态："+data.data.state,
+                                confirmButtonText: "确认"
+                            },
+                            function(){
+                                location.reload();
+                            })
+                    }else{
+                        swal({
+                            title:data.msg,
+                            type:"error",
+                            confirmButtonText: "确认"
+                        })
+                    }
+                },
+                error:function () {
+                    swal({
+                        title:"服务器错误",
+                        type:"error",
+                        timer:2000,
+                        closeOnConfirm:true,
+                        allowOutsideClick:true,
+                        confirmButtonText:'确认'
+                    })
+                }
+            });
+        })
+    })
+</script>
+</body>
+</html>

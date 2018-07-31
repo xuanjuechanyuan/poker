@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>管理后台</title>
+
+    <meta name="keywords" content="管理后台">
+    <meta name="description" content="管理后台">
+
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css" rel="stylesheet">
+    <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="nav-close"><i class="fa fa-times-circle"></i>
+        </div>
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                               <span class="block m-t-xs"><strong class="font-bold"><?=$userName?></strong></span>
+                                <span class="text-muted text-xs block"><?=$level?><b class="caret"></b></span>
+                                </span>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li>
+                                <a class="" data-toggle="modal" data-target="#editPass" href="">修改密码</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="/manage/user/logout">安全退出</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="logo-element">玄</div>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-label">主页</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="/manage/user/list"><i class="fa fa-user"></i> <span class="nav-label">用户管理</span></a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa fa-list"></i>
+                        <span class="nav-label">扑克管理</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a class="J_menuItem" href="/manage/poker/getlist">扑克列表</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <!--左侧导航结束-->
+    <!--右侧部分开始-->
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row content-tabs">
+            <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i>
+            </button>
+            <nav class="page-tabs J_menuTabs">
+                <div class="page-tabs-content">
+                    <a href="javascript:;" class="active J_menuTab" data-id="index_v1.html">首页</a>
+                </div>
+            </nav>
+            <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
+            </button>
+            <div class="btn-group roll-nav roll-right">
+                <button class="dropdown J_tabClose" data-toggle="dropdown">关闭操作<span class="caret"></span>
+
+                </button>
+                <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                    <li class="J_tabShowActive"><a>定位当前选项卡</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="J_tabCloseAll"><a>关闭全部选项卡</a>
+                    </li>
+                    <li class="J_tabCloseOther"><a>关闭其他选项卡</a>
+                    </li>
+                </ul>
+            </div>
+            <a href="/manage/user/logout" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+        </div>
+        <div class="row J_mainContent" id="content-main">
+            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="/manage/index/home" frameborder="0" data-id="index_v1.html" seamless></iframe>
+        </div>
+        <div class="footer">
+            <div class="pull-right">&copy; 2018 <a href="" target="_blank">玄绝禅院</a>
+            </div>
+        </div>
+    </div>
+    <!--右侧部分结束-->
+</div>
+<!--修改自己密码开始-->
+<div class="modal inmodal" id="editPass" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">修改密码</h4>
+            </div>
+            <div class="modal-body">
+                <form id="useradd" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">旧密码</label>
+
+                        <div class="col-sm-10">
+                            <input type="password" name="old_password" value="" required="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">新密码</label>
+
+                        <div class="col-sm-10">
+                            <input type="password" name="new_password" value="" required="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">确认密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" name="confirm_password" value="" class="form-control" required="">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                <button type="button" id="js_password" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--修改自己密码结束-->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="/static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/static/js/plugins/layer/layer.min.js"></script>
+<script src="/static/js/hplus.min.js"></script>
+<script type="text/javascript" src="/static/js/contabs.min.js"></script>
+<script src="/static/js/plugins/pace/pace.min.js"></script>
+<script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+
+<script type="application/javascript">
+    $(function () {
+        $('#js_password').on("click", function (ev) {
+
+            $(".help-block").remove();
+            var params = {
+                "old_password": $(":input[name='old_password']").val(),
+                "new_password": $(":input[name='new_password']").val(),
+                "confirm_password": $(":input[name='confirm_password']").val(),
+            };
+            var html = '';
+            if (params.old_password.length < 6) {
+                html = '<span class="text-left help-block m-b-none"><i class="fa fa-info-circle"></i> 请确认旧密码是否正确</span>'
+                $(":input[name='old_password']").after(html)
+            }
+            if (params.new_password.length < 6) {
+                html = '<span class="text-left help-block m-b-none"><i class="fa fa-info-circle"></i> 密码长度不能小于6</span>'
+                $(":input[name='new_password']").after(html)
+            }
+            if (params.new_password != params.confirm_password) {
+                html = '<span class="text-left help-block m-b-none"><i class="fa fa-info-circle"></i> 两次密码不一致</span>'
+                $(":input[name='confirm_password']").after(html)
+            }
+
+            $.ajax({
+                url: "/manage/user/editPassword",
+                type: "POST",
+                data: params,
+                success: function (data) {
+                    if (data.code == 0) {
+                        swal({
+                                title: "密码修改成功",
+                                type: "success",
+                                confirmButtonText: "确认"
+                            },
+                            function () {
+//                                $('#editPass').modal('hide')
+                                location.reload();
+                            })
+                    } else if (data.code == 100000004) {
+                        $.each(data.data, function (k, v) {
+                            html = '<span class="text-left help-block m-b-none"><i class="fa fa-info-circle"></i> ' + v + '</span>'
+                            $(":input[name='" + k + "']").after(html)
+                        })
+                    } else {
+                        swal({
+                            title: data.msg,
+                            type: "error",
+                            confirmButtonText: "确认"
+                        })
+                    }
+                },
+                error: function () {
+                    swal({
+                        title: "服务器错误",
+                        type: "error",
+                        timer: 2000,
+                        closeOnConfirm: true,
+                        allowOutsideClick: true,
+                        confirmButtonText: '确认'
+                    })
+                }
+            });
+
+
+        });
+    })
+</script>
+</body>
+</html>

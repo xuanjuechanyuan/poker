@@ -1,4 +1,4 @@
-###安装yaf扩展
+### 安装yaf扩展
 ```ini
 extension=yaf.so
 ;配置环境类型dev(开发状态)| product(开发环境)

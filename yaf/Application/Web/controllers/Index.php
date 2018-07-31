@@ -28,7 +28,7 @@ class IndexController extends Base\BaseControllers
         4  => '4',
         3  => '3',
         2  => '2',
-        1  => '1',
+        1  => 'A',
     );
     // 扑克花色.
     public $pokerTypeStr = [
@@ -56,19 +56,6 @@ class IndexController extends Base\BaseControllers
         $this->assign('data',$data);
         $this->assign('pokerTypeStr', $this->pokerTypeStrOne);
         $this->assign('pokerList', $this->pokerList);
-//        BaseYaf::disableView();
-//        $redis = $this->getRedis(false);
-//        $redis->set('a','dddd');
-//        $redis->get('a')
-
-//        return $this->error(1002,[GroupModel::instance()->a()]);
-//        echo 111;
-//        throw new Exception('aaa');
-//        var_dump($a);
-//        exit;
-        /*$g =  new GroupModel();
-        $g->a();
-        echo 211;*/
     }
 
 }
